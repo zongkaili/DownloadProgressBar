@@ -18,64 +18,24 @@ import android.util.Log;
 import android.view.View;
 
 public class FlikerProgressBar extends View implements Runnable {
-
     private PorterDuffXfermode xfermode = new PorterDuffXfermode(PorterDuff.Mode.SRC_ATOP);
-
     private int DEFAULT_HEIGHT_DP = 35;
-
     private float MAX_PROGRESS = 100f;
-
     private Paint textPaint;
-
     private Paint bgPaint;
-
     private String progressText;
-
     private Rect textBouds;
-
-    /**
-     * 左右来回移动的滑块
-     */
-    private Bitmap flikerBitmap;
-
-    /**
-     * 滑块移动最左边位置，作用是控制移动
-     */
-    private float flickerLeft;
-
-    /**
-     * 进度条 bitmap ，包含滑块
-     */
-    private Bitmap pgBitmap;
-
+    private Bitmap flikerBitmap;//左右来回移动的滑块
+    private float flickerLeft;//滑块移动最左边位置，作用是控制移动
+    private Bitmap pgBitmap;//进度条 bitmap ，包含滑块
     private Canvas pgCanvas;
-
-    /**
-     * 当前进度
-     */
-    private float progress;
-
+    private float progress;//当前进度
     private boolean isFinish;
-
     private boolean isStop;
-
-    /**
-     * 下载中颜色
-     */
-    private int loadingColor;
-
-    /**
-     * 暂停时颜色
-     */
-    private int stopColor;
-
-    /**
-     * 进度文本、边框、进度条颜色
-     */
-    private int progressColor;
-
+    private int loadingColor;//下载中颜色
+    private int stopColor;//暂停时颜色
+    private int progressColor;//进度文本、边框、进度条颜色
     private int textSize;
-
     private Thread thread;
 
     public FlikerProgressBar(Context context) {
@@ -157,7 +117,7 @@ public class FlikerProgressBar extends View implements Runnable {
     }
 
     /**
-     * 边框
+     * 画边框
      * @param canvas
      */
     private void drawBorder(Canvas canvas) {
@@ -168,7 +128,7 @@ public class FlikerProgressBar extends View implements Runnable {
     }
 
     /**
-     * 进度
+     * 画进度
      */
     @TargetApi(Build.VERSION_CODES.KITKAT)
     private void drawProgress() {

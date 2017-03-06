@@ -46,7 +46,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
             case R.id.download:
-                downLoad();
+//                if(mFlikerProgressBar.isFinish()){
+                    downLoad();
+//                }else{
+//                    mFlikerProgressBar.setStop(true);
+//                }
                 break;
             default:
                 break;
