@@ -1,4 +1,4 @@
-package com.beiing.flicker;
+package com.kelly.progress;
 
 import android.os.Handler;
 import android.os.Message;
@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-import com.beiing.flikerprogressbar.FlikerProgressBar;
+import com.kelly.progressbar.FlikerProgressBar;
 
 public class MainActivity extends AppCompatActivity {
 

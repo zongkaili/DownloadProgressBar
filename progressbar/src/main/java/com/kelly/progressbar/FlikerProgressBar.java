@@ -1,4 +1,4 @@
-package com.beiing.flikerprogressbar;
+package com.kelly.progressbar;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -17,12 +17,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 
-/**
- * Created by chenliu on 2016/8/26.<br/
- * 描述：
- * </br>
- */
-public class FlikerProgressBar extends View implements Runnable{
+public class FlikerProgressBar extends View implements Runnable {
 
     private PorterDuffXfermode xfermode = new PorterDuffXfermode(PorterDuff.Mode.SRC_ATOP);
 
@@ -132,7 +127,7 @@ public class FlikerProgressBar extends View implements Runnable{
         int heightSpecMode = MeasureSpec.getMode(heightMeasureSpec);
         int heightSpecSize = MeasureSpec.getSize(heightMeasureSpec);
         int height = 0;
-        switch (heightSpecMode){
+        switch (heightSpecMode) {
             case MeasureSpec.AT_MOST:
                 height = (int) dp2px(DEFAULT_HEIGHT_DP);
                 break;
@@ -150,19 +145,15 @@ public class FlikerProgressBar extends View implements Runnable{
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-//边框
-        drawBorder(canvas);
+        drawBorder(canvas);//边框
 
-//进度
-        drawProgress();
+        drawProgress();//进度
 
         canvas.drawBitmap(pgBitmap, 0, 0, null);
 
-//进度text
-        drawProgressText(canvas);
+        drawProgressText(canvas);//进度text
 
-//变色处理
-        drawColorProgressText(canvas);
+        drawColorProgressText(canvas);//变色处理
     }
 
     /**
@@ -191,7 +182,7 @@ public class FlikerProgressBar extends View implements Runnable{
         pgCanvas.drawColor(progressColor);
         pgCanvas.restore();
 
-        if(!isStop){
+        if (!isStop) {
             bgPaint.setXfermode(xfermode);
             pgCanvas.drawBitmap(flikerBitmap, flickerLeft, 0, bgPaint);
             bgPaint.setXfermode(null);
@@ -224,7 +215,7 @@ public class FlikerProgressBar extends View implements Runnable{
         float xCoordinate = (getMeasuredWidth() - tWidth) / 2;
         float yCoordinate = (getMeasuredHeight() + tHeight) / 2;
         float progressWidth = (progress / MAX_PROGRESS) * getMeasuredWidth();
-        if(progressWidth > xCoordinate){
+        if (progressWidth > xCoordinate) {
             canvas.save(Canvas.CLIP_SAVE_FLAG);
             float right = Math.min(progressWidth, xCoordinate + tWidth * 1.1f);
             canvas.clipRect(xCoordinate, 0, right, getMeasuredHeight());
@@ -233,8 +224,8 @@ public class FlikerProgressBar extends View implements Runnable{
         }
     }
 
-    public void setProgress(float progress){
-        if(!isStop){
+    public void setProgress(float progress) {
+        if (!isStop) {
             this.progress = progress;
             invalidate();
         }
@@ -246,9 +237,10 @@ public class FlikerProgressBar extends View implements Runnable{
 
     public void setStop(boolean stop) {
         isStop = stop;
-        if(isStop){
+        if (isStop) {
             progressColor = stopColor;
-        } else {
+        }
+        else {
             progressColor = loadingColor;
             thread = new Thread(this);
             thread.start();
@@ -269,11 +261,12 @@ public class FlikerProgressBar extends View implements Runnable{
         return isFinish;
     }
 
-    public void toggle(){
-        if(!isFinish){
-            if(isStop){
+    public void toggle() {
+        if (!isFinish) {
+            if (isStop) {
                 setStop(false);
-            } else {
+            }
+            else {
                 setStop(true);
             }
         }
@@ -282,10 +275,10 @@ public class FlikerProgressBar extends View implements Runnable{
     @Override
     public void run() {
         int width = flikerBitmap.getWidth();
-        while (!isStop){
+        while (!isStop) {
             flickerLeft += dp2px(5);
             float progressWidth = (progress / MAX_PROGRESS) * getMeasuredWidth();
-            if(flickerLeft >= progressWidth){
+            if (flickerLeft >= progressWidth) {
                 flickerLeft = -width;
             }
             postInvalidate();
@@ -298,14 +291,16 @@ public class FlikerProgressBar extends View implements Runnable{
     }
 
     private String getProgressText() {
-        String text= "";
-        if(!isFinish){
-            if(!isStop){
+        String text = "";
+        if (!isFinish) {
+            if (!isStop) {
                 text = "下载中" + progress + "%";
-            } else {
+            }
+            else {
                 text = "继续";
             }
-        } else{
+        }
+        else {
             text = "下载完成";
         }
 
@@ -313,8 +308,7 @@ public class FlikerProgressBar extends View implements Runnable{
     }
 
 
-
-    private float dp2px(int dp){
+    private float dp2px(int dp) {
         float density = getContext().getResources().getDisplayMetrics().density;
         return dp * density;
     }

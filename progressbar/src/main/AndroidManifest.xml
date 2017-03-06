@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.beiing.flikerprogressbar">
+    package="com.kelly.progressbar">
 
     <application
         android:allowBackup="true"
