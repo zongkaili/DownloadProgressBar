@@ -1,6 +1,5 @@
-# FlickerProgressBar
+# DownloadProgressBar
 
-Android 仿应用宝下载进度条 
 
 ### 自定义属性
 
@@ -9,8 +8,6 @@ Android 仿应用宝下载进度条
 - textSize 进度文本字体大小
 
 ### 效果图
-
-![pic](https://github.com/LineChen/FlikerProgressBar/blob/master/screenshot/screenshot.gif)
 
 ### 使用
 
