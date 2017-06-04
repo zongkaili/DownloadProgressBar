@@ -10,12 +10,12 @@ import android.widget.CompoundButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.kelly.download.DownLoadListener;
 import com.kelly.download.DownLoadManager;
 import com.kelly.download.TaskInfo;
 import com.kelly.download.bean.SQLDownLoadInfo;
 import com.kelly.progress.R;
-import com.kelly.progressbar.FlikerProgressBar;
 
 import java.util.ArrayList;
 
@@ -52,8 +52,7 @@ public class ListAdapter extends BaseAdapter{
             holder = new Holder();
             convertView = LayoutInflater.from(mcontext).inflate(R.layout.item_main, null);
             holder.fileName = (TextView)convertView.findViewById(R.id.file_name);
-            holder.textProgress = (TextView)convertView.findViewById(R.id.file_size);
-            holder.fileProgress = (ProgressBar) convertView.findViewById(R.id.progressbar);
+            holder.fileProgress = (NumberProgressBar) convertView.findViewById(R.id.progressbar);
             holder.downloadIcon = (CheckBox)convertView.findViewById(R.id.checkbox);
             convertView.setTag(holder);
         }else{
@@ -61,7 +60,6 @@ public class ListAdapter extends BaseAdapter{
         }
         holder.fileName.setText(listdata.get(position).getFileName());
         holder.fileProgress.setProgress(listdata.get(position).getProgress());
-        holder.textProgress.setText(listdata.get(position).getProgress() + "%");
         holder.downloadIcon.setOnCheckedChangeListener(new CheckedChangeListener(position));
         if(listdata.get(position).isOnDownloading()){
             holder.downloadIcon.setChecked(true);
@@ -73,8 +71,7 @@ public class ListAdapter extends BaseAdapter{
 
     static class Holder {
         TextView fileName = null;
-        TextView textProgress = null;
-        ProgressBar fileProgress = null;
+        NumberProgressBar fileProgress = null;
         CheckBox downloadIcon = null;
     }
 

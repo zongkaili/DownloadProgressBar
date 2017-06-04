@@ -17,7 +17,6 @@ import com.kelly.download.DownLoadManager;
 import com.kelly.download.DownLoadService;
 import com.kelly.download.TaskInfo;
 import com.kelly.progress.adapter.ListAdapter;
-import com.kelly.progressbar.FlikerProgressBar;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -75,18 +74,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-          /*  case R.id.flikerbar:
-                if(!mFlikerProgressBar.isFinish()){
-                    mFlikerProgressBar.toggle();
-                }
-                break;
-            case R.id.download:
-//                if(mFlikerProgressBar.isFinish()){
-                    downLoad();
-//                }else{
-//                    mFlikerProgressBar.setStop(true);
-//                }
-                break;*/
             case R.id.btn_add_to_download:
                 addDownloadTask();
                 break;
@@ -104,18 +91,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         urlText = (EditText) showview.findViewById(R.id.file_url);
         nameText.setText("手机qq");
         urlText.setText("http://sqdd.myapp.com/myapp/qqteam/AndroidQQ/mobileqq_android.apk");
-        new AlertDialog.Builder(MainActivity.this).setView(showview).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+        new AlertDialog.Builder(MainActivity.this)
+                .setView(showview)
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if ("".equals(nameText.getText().toString()) || "".equals(urlText.getText().toString())) {
                     Toast.makeText(MainActivity.this, "请输入文件名和下载路径", Toast.LENGTH_SHORT).show();
                 } else {
+                    for (int i = 0; i < manager.getAllTask().size(); i++){
+                        if(nameText.getText().toString().equals(manager.getAllTask().get(i).getFileName())){
+                            Toast.makeText(MainActivity.this, "该任务正在下载中...", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                    }
+
                     TaskInfo info = new TaskInfo();
                     info.setFileName(nameText.getText().toString());
-                            /*服务器一般会有个区分不同文件的唯一ID，用以处理文件重名的情况*/
+                    //服务器一般会有个区分不同文件的唯一ID，用以处理文件重名的情况
                     info.setTaskID(nameText.getText().toString());
                     info.setOnDownloading(true);
-                            /*将任务添加到下载队列，下载器会自动开始下载*/
+                    //将任务添加到下载队列，下载器会自动开始下载
                     manager.addTask(nameText.getText().toString(), urlText.getText().toString(), nameText.getText().toString());
                     adapter.addItem(info);
                 }
